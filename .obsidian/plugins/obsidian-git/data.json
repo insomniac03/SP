@@ -21,7 +21,7 @@
   "autoBackupAfterFileChange": false,
   "treeStructure": false,
   "refreshSourceControl": true,
-  "basePath": "https:\\\\github.com\\insomniac03\\SP",
+  "basePath": "\"C:\\Users\\user\\Desktop\\SP\"",
   "differentIntervalCommitAndPush": true,
   "changedFilesInStatusBar": false,
   "showedMobileNotice": true,
