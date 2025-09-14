@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "65562260c258cc8a",
+        "id": "75df79b93d078a0d",
         "type": "tabs",
         "children": [
           {
-            "id": "7a507d89935948d3",
+            "id": "46ae164643af304b",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -94,7 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Welcome.md",
+                "file": "1주차.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -104,7 +104,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks for Welcome"
+              "title": "1주차 의 백링크"
             }
           },
           {
@@ -166,13 +166,15 @@
       "daily-notes:오늘의 일일 노트 열기": false,
       "templates:템플릿 삽입": false,
       "command-palette:명령어 팔레트 열기": false,
-      "bases:새 베이스 생성하기": false
+      "bases:새 베이스 생성하기": false,
+      "obsidian-git:Open Git source control": false
     }
   },
-  "active": "7a507d89935948d3",
+  "active": "46ae164643af304b",
   "lastOpenFiles": [
-    "2.md",
+    "무제.base",
     "1주차.md",
+    "2.md",
     "Welcome.md",
     "create a link.md"
   ]
