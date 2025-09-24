@@ -85,11 +85,11 @@
               "type": "bookmarks",
               "state": {},
               "icon": "lucide-bookmark",
-              "title": "Bookmarks"
+              "title": "북마크"
             }
           },
           {
-            "id": "4fcaee5d87759329",
+            "id": "82a1fb803b9f2a89",
             "type": "leaf",
             "state": {
               "type": "mk-path-view",
@@ -98,8 +98,7 @@
               "title": "Navigator"
             }
           }
-        ],
-        "currentTab": 4
+        ]
       }
     ],
     "direction": "horizontal",
@@ -208,8 +207,9 @@
   },
   "active": "4ddc1555c86aec42",
   "lastOpenFiles": [
-    "시스템 프로그래밍/2주차.md",
+    "시스템 프로그래밍/4주차.md",
     "시스템 프로그래밍/3주차.md",
+    "시스템 프로그래밍/2주차.md",
     "시스템 프로그래밍/[[시스템 프로그래밍```    TypePaste Your Code.md```    TypePaste Your Code   ]].md",
     "시스템 프로그래밍/```    TypePaste Your Code.md",
     "Tags",
