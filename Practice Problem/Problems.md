@@ -206,3 +206,83 @@
 | -4(1100) | -4(100)   |
 | -2(1110) | -2(110)   |
 > 음수일때 값이 변하지 않는 이유는 MSB가 살아있기 때문(lucky)
+
+
+
+| x   | x        | y        | x * y      | truncated |     |
+| --- | -------- | -------- | ---------- | --------- | --- |
+| U   | 100 : 4  | 101 : 5  | 20(010100) | 100(4)    |     |
+| T   | 100 : -4 | 101 : -3 | 12(001100) | 100(-4)   |     |
+| U   | 010 : 2  | 111 : 7  | 14(001110) | 110(6)    |     |
+| T   | 010 : 2  | 111 : -1 | -2(111110) | 110(-2)   |     |
+| U   | 110 : 6  | 110 : 6  | 36(100100) | 100(4)    |     |
+| T   | 110 : -2 | 110 : -2 | 4(000100)  | 100(-4)   |     |
+
+
+### 2.44
+
+x,y : signed
+ux,uy : unsigned
+
+- (x>0) || (x-1<0) 
+  : x가 Tmin이면 x-1은 TMax+1이 될 수 있다. False.
+- (x & 7) != 7 || (x<<29<0) 
+  : x가 7일때(00..111), x를 29비트만큼 left-shift하면 상위3비트가 111이다, 즉 음수이다. True
+- (x * x) >=0 
+  : x가 TMax이면 Truncated 되어 음수가 나올 수 있다. False
+- x < 0 || -x <=0
+  : x가 TMax이면 -x는 T의 범위에 반드시 속한다. True
+- x >0 || -x >=0
+  : x가 TMin이면 -x는 T의 범위에 벗어난다.(TMin의 부호를 바꾸면 TMax보다 1큼). False
+- x+y == uy+ux
+  : signed 덧셈과 unsigned 덧셈과 비트 형태는 같다. True
+- x*~y + uy * ux == -x
+  : ~y = -y-1, ~y = y-1이므로 x * (y-1) + ux * uy = xy - x + uxuy. 여기서 xy와 uxuy의 비트 형태는 같으므로 빼면 0이된다. 남는건 -x
+
+    ---
+
+> x,y 는 int이고 ux,uy는 unsigned(x), unsigned(y) 이다.
+- A. (x<y) == (-x > -y)
+  : x가 TMin이고 y가 TMin+1일 때 -y는 TMax가 되므로 false
+- B. ((x+y) << 4) + y - x == 17 * y + 15 * x
+  : 16x+16y + y -x == 17y + 15x.  overflow가 발생해도 대수적으로 동일.(비트 구조가 같음)
+- C. ~x + ~y + 1 == ~(x+y)
+  : -x = ~x + 1이므로  좌변은 -x-1-y-1+1 = -x-y-1이고, 우변은 -(x+y) -1 이므로 True.
+- D. (ux-uy) == (unsigned)(x-y)
+  : 좌변이 unsigned(x)- unsigned(y) == (unsigned)(x-y)이므로 True.
+- E. ((x>>2)<<2) <= x
+  : right-shift를 하여 상위 2비트를 x의 MSB로 만들어도 다시 상위 2비트를 지우는 left-shift를 수행하기 때문에 결과적으로 하위 2비트만 0으로 바뀐다. 이 때 원래 x의 하위 2비트가 0이었으면 연산값과 원래 x의 값이 동일하고 0이 아니라면 연산값이 x보다 더 작아진다.
+  
+
+### 2.54
+
+>x <- int, d <- double, f <- float 
+
+- A. x == (int)(double) x
+  : int형이 표현할 수 있는 수의 범위는 32비트이고 doble이 표현할 수 있는 수의 범위는 52(+1)비트 이므로 int 범위를 cover할 수 있다. True
+- B. x == (int)(float) x
+  : flao가 표현할 수 있는 수의 범위는 23(+1)비트 이로 int 범위를 cover할 수 없다. False
+- C. d == (double)(float) d
+  : double을 float로 캐스팅 할 시 DMax의 값같이 float가 표현할 수 없는 수의 범위를 표현할 수 없다. False
+- D. f == (float)(double) f
+  : double의 수의 범위가 더 크므로 float를 캐스팅할수 있다.
+- E. f == -(-f)
+  : float는 signed 비트만 바꾸면 부호가 바뀌므로 True
+
+f+d -f ==d
+    ---
+
+- A. (float) x == (float) dx
+  : int->float(불완전), int->double(완전)->float(int의 범위 내이기 때문에 불완전) 그런데 불완전하게 변환된 값이 비트구조가 같음.
+
+- B. dx- dy == (double) (x-y)
+  : x=TMin, y=1 일 때 각각을 double로 캐스팅 후 TMin -1을 해도 정상적인 값이 나옴. bu x-y를 int 범위에서 연산을 하면 underflow가 발생하여 TMax가 되고 이 값을 double로 캐스팅하면 정상적으로 TMAx의 값이 나오므로 false.
+
+- C. (dx + dy) + dz == dx + (dy+dz)
+  : dx = 1e20, dy = 1e-20, dz = 1e20 일 때 좌변은 0 우변은 inf가 되므로 false.
+
+
+- D. (dx * dy) * dz == dx * (dy * dz)
+  : dx = 1e20, dy = 1e20, dz = 1e-20일 때 좌변은 inf * 작은 수 이므로 inf가 되 우변은 1e20 * 1이 되므로 1e20이 된다. false
+- E. dx /dx == dz / dz
+  : dx = 0이면 NaN dz = 1 1 이므로 false.
